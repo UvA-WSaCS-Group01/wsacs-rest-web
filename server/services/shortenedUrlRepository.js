@@ -13,10 +13,11 @@ class ShortenedUrlsRepository extends Array{
         const idx = this.findIndex(u => u.id == urlShorten.id);
         if(idx == -1)
             return -1;
+            
         this[idx] = urlShorten;
         return this[idx];
     }
-    
+
     delete(id){
         const idx = this.findIndex(u => u.id == id);
         if(idx === -1)

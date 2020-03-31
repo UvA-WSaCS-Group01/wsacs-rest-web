@@ -5,6 +5,9 @@ const constants = require('./config/constants');
 
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+   extended: true
+ })); 
 
 app.use(function(req, res, next) {
    res.header('Access-Control-Allow-Origin', '*');
