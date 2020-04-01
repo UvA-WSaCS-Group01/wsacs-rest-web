@@ -40,8 +40,12 @@ var re_weburl = new RegExp(
     "$", "i"
   );
   
-var validateUrl = function(url){
-    return re_weburl.test(url);
+var isUri = function(url){
+    const result = re_weburl.test(url);
+    if(!result)
+        throw new URIError();
+
+    return result;
 }
 
-module.exports = {validateUrl};
+module.exports = {isUri: isUri};
