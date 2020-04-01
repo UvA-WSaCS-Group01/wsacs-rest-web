@@ -1,42 +1,20 @@
 <template>
   <div class="mt-4">
     <b-container>
-      <b-row class="mb-4">
-        <b-col cols="7" class="text-left">
-          <b-form @submit="onShortendSubmit" v-if="show">
-            <b-input-group prepend="Your shortend URL" class>
-              <b-form-input required v-model="shortendurlcode"></b-form-input>
-              <b-input-group-append>
-                <b-button variant="outline-primary" value="open" type="submit">Open</b-button>
-                <b-button variant="outline-danger" value="delete" type="submit">Delete</b-button>
-              </b-input-group-append>
-            </b-input-group>
-          </b-form>
-        </b-col>
-        <b-col cols="5" class="text-right">
-          <b-button variant="outline-primary" @click="getAll" class="mr-2">List Keys</b-button>
-          <b-modal ref="modal-keys" id="modal-keys" title="Allocated URL Keys" ok-only>
-            <b-container>
-              <b-row v-for="key in keys" :key="key.id">{{key}}</b-row>
-            </b-container>
-          </b-modal>
-          <b-button @click="onDeleteAll" variant="outline-danger">Delete All</b-button>
-        </b-col>
-      </b-row>
       <b-row>
         <b-col cols="12">
+        <h3>Shorten your URL</h3>
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group
               id="input-group-1"
-              label="Shorten this URL:"
               label-for="input-1"
-              description="Add your url you want to shorten here."
+              description="Add your url you want to shorten in the field above."
             >
               <b-form-input id="input-1" v-model="form.url" required placeholder="URL"></b-form-input>
             </b-form-group>
 
             <b-form-group id="input-group-4">
-              <b-form-checkbox v-model="form.checked">using this id:</b-form-checkbox>
+              <b-form-checkbox v-model="form.checked">Use your own ID</b-form-checkbox>
             </b-form-group>
 
             <b-form-group
@@ -56,6 +34,34 @@
             <b-button type="submit" variant="primary">Submit</b-button>
           </b-form>
         </b-col>
+      </b-row>
+      <hr>
+      <b-row class="mb-4">
+        <b-col cols="7" class="text-left">
+        <h3>Find or delete your url by ID</h3>
+          <b-form @submit="onShortendSubmit" v-if="show">
+            <b-input-group prepend="ID" class>
+              <b-form-input required v-model="shortendurlcode"></b-form-input>
+              <b-input-group-append>
+                <b-button variant="outline-primary" value="open" type="submit">Get</b-button>
+                <b-button variant="outline-danger" value="delete" type="submit">Delete</b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </b-form>
+        </b-col>
+      </b-row>
+      <hr>
+      <b-row>
+        <b-col cols="5">
+          <h3>Get a List of ID's or Delete all ID's</h3>
+            <b-button variant="outline-primary" @click="getAll" class="mr-2">List Keys</b-button>
+            <b-modal ref="modal-keys" id="modal-keys" title="Allocated URL Keys" ok-only>
+              <b-container>
+                <b-row v-for="key in keys" :key="key.id">{{key}}</b-row>
+              </b-container>
+            </b-modal>
+            <b-button @click="onDeleteAll" variant="outline-danger">Delete All</b-button>
+          </b-col>
       </b-row>
     </b-container>
   </div>
