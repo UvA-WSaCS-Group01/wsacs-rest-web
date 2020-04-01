@@ -2,59 +2,69 @@ const { WINDOW_LOCATION_ORIGIN, PORT } = require('../config/constants');
 
 const { urlShorten } = require('../models/urlShorten');
 const { ShortenedUrlsRepository } = require('../services/shortenedUrlRepository');
-const { validateUrl } = require('../helper/web-url-validation');
+const { isUri } = require('../helper/web-url-validation');
+const { generate } = require('../middleware/shortid');
+const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
 
 var urlRepository = new ShortenedUrlsRepository();
 module.exports = app => {
-    // TODO: I'm not sure what the PUT function is for. To replace the id with a new id?
-    // :id identificator of a URL
+    // :id identificator of a URL and new URL (url in body)
     app.put('/id/:id', function (req, res) {
-        const shortenedUrl = urlRepository.get(req.params.id);
-
-        //TODO: Check URL by regex and return 400 Error
-
-        const result = urlRepository.update(shortenedUrl);
-
-        if(result === -1){
-            return res.status(404).send();
+        const newUrl = req.body['url'];
+        try {
+            isUri(newUrl);
+            const result = urlRepository.update(req.params.id, newUrl);
+            return res.status(200).send(result);
+        } catch (error) {
+            switch (true) {
+                case (error instanceof IndexNotFoundError):
+                    return res.status(404).send();
+                case (error instanceof URIError):
+                    return res.status(400).send("error");
+                default:
+                    break;
+            }
         }
-
-        return res.status(200).send(result);
     })
     
     // :id identificator of a URL
     app.delete('/id/:id', function (req, res) {
-        const result = urlRepository.delete(req.params.id);
-        if(result === -1){
+        try {
+            const result = urlRepository.delete(req.params.id);
+            return res.status(204).send();       
+        } catch (error) {
             return res.status(404).send();
         }
-        return res.status(204).send();
     })
     
     // :id identificator of a URL 
     app.get('/id/:id', function (req, res) {
-        return res.send(urlRepository.get(req.params.id));
+        try {
+            var url = urlRepository.get(req.params.id);
+            return res.status(301).send(url);
+        } catch (error) {
+            return res.status(404).send();
+        }
     })
 
     app.get('/', function (req, res) {
         return res.send(urlRepository.getAll());
     })
 
-    // :url URL to shorten
+    // :url (in body) URL to shorten
     app.post('/', function (req, res) {
         const url = req.body['url'];
 
-        //TODO: Check URL by regex and return 400 Error
-        if(!validateUrl(url)){
+        try {
+            isUri(url);
+            const shortenedUrlId = generate(); 
+            const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
+            let shortenedUrlObject = new urlShorten(url, shortBaseUrl + '/' + shortenedUrlId, shortenedUrlId);
+            shortenedUrlObject = urlRepository.add(shortenedUrlObject);
+            return res.status(201).send(shortenedUrlObject);
+        } catch (error) {
             return res.status(400).send("error");
-        }
-
-        const shortenedUrlId = url; //FIXME: Write  URL Shortener Function
-
-        const shortenedUrlObject = new urlShorten(url, WINDOW_LOCATION_ORIGIN + ':' + PORT + '/' + shortenedUrlId, shortenedUrlId);
-        urlRepository.push(shortenedUrlObject);
-        return res.status(201).send(shortenedUrlObject);
-        
+        }        
     })
 
     app.delete('/', function(req, res){

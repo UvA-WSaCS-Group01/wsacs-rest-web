@@ -39,9 +39,11 @@ var re_weburl = new RegExp(
       "(?:[/?#]\\S*)?" +
     "$", "i"
   );
-  
-var validateUrl = function(url){
-    return re_weburl.test(url);
-}
 
-module.exports = {validateUrl};
+module.exports = {isUri: function(url){
+    const result = re_weburl.test(url);
+    if(!result)
+        throw new URIError();
+
+    return result;
+}};
