@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin, ToastPlugin } from 'bootstrap-vue'
 import { LayoutPlugin } from 'bootstrap-vue'
 
 
@@ -12,6 +12,7 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.use(LayoutPlugin)
+Vue.use(ToastPlugin)
 
 Vue.config.productionTip = false
 

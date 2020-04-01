@@ -10,6 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "base32": "0.0.6",
+    "base64url": "^3.0.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "nodemon": "^1.11.0",
