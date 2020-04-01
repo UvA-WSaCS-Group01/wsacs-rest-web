@@ -3,30 +3,24 @@ const { WINDOW_LOCATION_ORIGIN, PORT } = require('../config/constants');
 const { urlShorten } = require('../models/urlShorten');
 const { ShortenedUrlsRepository } = require('../services/shortenedUrlRepository');
 const { isUri } = require('../helper/web-url-validation');
-const { IndexNotFoundError, NotFoundError } = require('../models/customErrors')
+const { generate } = require('../middleware/shortid');
+const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
 
 var urlRepository = new ShortenedUrlsRepository();
 module.exports = app => {
-    // TODO: I'm not sure what the PUT function is for. To replace the id with a new id?
-    // :id identificator of a URL
+    // :id identificator of a URL and new URL (url in body)
     app.put('/id/:id', function (req, res) {
+        const newUrl = req.body['url'];
         try {
-            const shortenedUrl = urlRepository.get(req.params.id);
-            const result = urlRepository.update(shortenedUrl);
-
-            
-            //TODO: Check URL by regex and return 400 Error
-
+            isUri(newUrl);
+            const result = urlRepository.update(req.params.id, newUrl);
             return res.status(200).send(result);
         } catch (error) {
             switch (true) {
-                case (error instanceof NotFoundError):
-                    return res.status(404).send();
-                    break;
                 case (error instanceof IndexNotFoundError):
                     return res.status(404).send();
-                    break;
-            
+                case (error instanceof URIError):
+                    return res.status(400).send("error");
                 default:
                     break;
             }
@@ -46,7 +40,8 @@ module.exports = app => {
     // :id identificator of a URL 
     app.get('/id/:id', function (req, res) {
         try {
-            return res.status(301).send(urlRepository.get(req.params.id));
+            var url = urlRepository.get(req.params.id);
+            return res.status(301).send(url);
         } catch (error) {
             return res.status(404).send();
         }
@@ -56,17 +51,16 @@ module.exports = app => {
         return res.send(urlRepository.getAll());
     })
 
-    // :url URL to shorten
+    // :url (in body) URL to shorten
     app.post('/', function (req, res) {
         const url = req.body['url'];
 
-        //TODO: Check URL by regex and return 400 Error
         try {
             isUri(url);
-            const shortenedUrlId = url; //FIXME: Write  URL Shortener Function
+            const shortenedUrlId = generate(); 
             const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
-            const shortenedUrlObject = new urlShorten(url, shortBaseUrl + '/' + shortenedUrlId, shortenedUrlId);
-            urlRepository.push(shortenedUrlObject);
+            let shortenedUrlObject = new urlShorten(url, shortBaseUrl + '/' + shortenedUrlId, shortenedUrlId);
+            shortenedUrlObject = urlRepository.add(shortenedUrlObject);
             return res.status(201).send(shortenedUrlObject);
         } catch (error) {
             return res.status(400).send("error");

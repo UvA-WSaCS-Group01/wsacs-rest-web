@@ -3,8 +3,6 @@ class urlShorten{
         this.originalUrl=originalUrl;
         this.shortenUrl=shortenUrl;
         this.id=id;
-        this.createdAt;
-        this.updatedAt;
     }
 }
 
