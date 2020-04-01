@@ -44,7 +44,7 @@ module.exports = app => {
     })
 
     app.delete('/', function (req, res) {
-        urlMap = {};
+        urlRepository = new ShortenedUrlsRepository();
         return res.status(204).send();
     })
 
