@@ -52,7 +52,7 @@
       </b-row>
       <hr>
       <b-row>
-        <b-col cols="5">
+        <b-col cols="12">
           <h3>Get a List of ID's or Delete all ID's</h3>
             <b-button variant="outline-primary" @click="getAll" class="mr-2">List Keys</b-button>
             <b-modal ref="modal-keys" id="modal-keys" title="Allocated URL Keys" ok-only>
@@ -101,7 +101,7 @@ export default {
         .then(resp => {
           console.log(resp.data)
           let text = `We converted ${url} to the id ${resp.data}`;
-          if (this.form.checked)  {text = `Your shortURL was updated to ${url}`}
+          if (this.form.checked)  {text = `The shortURL id ${this.form.code} was set to ${url}`}
 
           this.$bvToast.toast(text, {
             title: "We shortend your URL",
