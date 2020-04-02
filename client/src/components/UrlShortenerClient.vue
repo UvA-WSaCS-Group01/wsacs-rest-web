@@ -74,11 +74,12 @@ export default {
   name: "UrlShortenerClient",
   data: function() {
     return {
-      api: new Api("http://localhost:8081/"),
+      api: new Api("http://localhost:8082/api/"),
       form: {
         url: "",
         checked: false,
-        code: ""
+        code: "",
+        clickedBtn: ""
       },
       shortendurlcode: "",
       keys: [],
@@ -131,7 +132,7 @@ export default {
     },
     onShortendSubmit(evt) {
       evt.preventDefault();
-      let type = evt.explicitOriginalTarget.value;
+      let type = document.activeElement.value;
 
       if (type == "delete") {
         let req = this.api.delete_by_id(this.shortendurlcode);

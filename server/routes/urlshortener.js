@@ -7,7 +7,7 @@ const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
 const code = require('../helper/code');
 
 // var urlRepository = new ShortenedUrlsRepository();
-var urlRepository = new ShortenedUrlsRepository();
+const urlRepository = new ShortenedUrlsRepository();
 
 var keys = [];
 var getSmallestIndex = () => {
@@ -46,7 +46,7 @@ module.exports = app => {
     })
 
     app.delete('/api/', function (req, res) {
-        urlRepository = urlRepository.deleteAll();
+        urlRepository.deleteAll();
         return res.status(204).send();
     })
 
@@ -64,7 +64,6 @@ module.exports = app => {
             urlRepository.update(shortenedUrlObject);
             return res.status(200).send();
         } catch (error) {
-            console.log(error)
             switch (true) {
                 case (error instanceof IndexNotFoundError):
                     return res.status(404).send();
