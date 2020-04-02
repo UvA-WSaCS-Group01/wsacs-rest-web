@@ -11,16 +11,19 @@ export default class Api {
     }   
 
     get_by_id(id) {
+        id =  encodeURIComponent(id);
         return this._http.get(`/${id}`)
     }
 
     async put_by_id(id, url) {
+        id =  encodeURIComponent(id);
         return await this._http.put(`/${id}`, {
             url: url
           });
     }
 
     async delete_by_id(id) {
+        id =  encodeURIComponent(id);
         return await this._http.delete(`/${id}`)
     }
 
