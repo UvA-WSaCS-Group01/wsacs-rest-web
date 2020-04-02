@@ -1,20 +1,22 @@
 const { WINDOW_LOCATION_ORIGIN, PORT } = require('../config/constants');
 const { urlShorten } = require('../models/urlShorten');
-// const { ShortenedUrlsRepository } = require('../services/shortenedUrlRepository');
 const { ShortenedUrlsRepository } = require('../services/urlRepository');
 const { isUri } = require('../helper/web-url-validation');
 const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
 const code = require('../helper/code');
 
-// var urlRepository = new ShortenedUrlsRepository();
 const urlRepository = new ShortenedUrlsRepository();
 
-var keys = [];
-var getSmallestIndex = () => {
-    // TODO: make smarter
-    if (keys.length == 0)  return 0;
-    keys.sort((a, b) => a - b);
-    return keys[keys.length - 1] + 1;
+var numericId = 0;
+var getAutoincrementedId = () => {
+    let id = code.encode(numericId);
+    let keys = urlRepository.getAll();
+    while (keys.includes(id)) {
+        if (numericId == Number.MAX_SAFE_INTEGER) throw new Error("Reached Id limit");
+        numericId++;
+        id = code.encode(numericId);
+    }
+    return id;
 }
 
 module.exports = app => {
@@ -32,12 +34,8 @@ module.exports = app => {
             return res.status(400).send("error");
         }
 
-        // if an url:
-        let index = getSmallestIndex();
-        keys.push(index); // TODO: This might be removed
-
-        var shortenedUrlId = code.encode(index);
-        const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
+        let shortenedUrlId = getAutoincrementedId();
+        const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT; // TODO: Why would this be necessary?
         let shortenedUrlObject = new urlShorten(url, shortBaseUrl + '/' + shortenedUrlId, shortenedUrlId);
 
         shortenedUrlObject = urlRepository.add(shortenedUrlObject);
@@ -55,10 +53,6 @@ module.exports = app => {
         const newUrl = req.body['url'];
         try {
             isUri(newUrl);
-            // TODO: validate if key is valid 
-            // Lucien: Decoding not needed. Use id as id for hashmap.
-            // let index = code.decode(req.params.id);
-            // console.log(index);
             const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
             let shortenedUrlObject = new urlShorten(newUrl, shortBaseUrl + '/' + req.params.id, req.params.id);
             urlRepository.update(shortenedUrlObject);
