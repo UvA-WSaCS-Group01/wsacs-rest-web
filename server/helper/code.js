@@ -1,7 +1,17 @@
-const table = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const table = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+class Code{
+    constructor(){
+        this.keys = new Array();
+    }
 
-module.exports = {
-    encode: function(number){
+    getSmallestIndex(){
+        // TODO: make smarter
+        if (this.keys.length == 0)  return 0;
+        this.keys.sort((a, b) => a - b);
+        return this.keys[this.keys.length - 1] + 1;
+    }
+
+    encode(number){
         // max possible number: 9007199254740981
         // can lead to 145277407334531 + 1 long string -> fails for me 
         const N = table.length;
@@ -15,9 +25,9 @@ module.exports = {
         }
         if (code == "") return "0";
         return code;
-    },
+    }
 
-    decode: function(code) {
+    decode(code){
         var i;
         let id = 0;
         const N = table.length;
@@ -29,5 +39,5 @@ module.exports = {
 
         return id
     }
-
-};
+}
+module.exports = { Code };
