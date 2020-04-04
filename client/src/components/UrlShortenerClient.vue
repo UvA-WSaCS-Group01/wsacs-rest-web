@@ -73,7 +73,7 @@ export default {
   name: "UrlShortenerClient",
   data: function() {
     return {
-      api: new Api("http://localhost:8082/api/"),
+      api: new Api("http://localhost:8082"),
       form: {
         url: "",
         code: "",

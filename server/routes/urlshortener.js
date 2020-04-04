@@ -9,12 +9,12 @@ const urlRepository = new ShortenedUrlsRepository();
 const code = new Code();
 
 module.exports = app => {
-    app.get('/api/', function (req, res) {
+    app.get('/', function (req, res) {
         return res.send(urlRepository.getAll());
     })
 
     // :url (in body) URL to shorten
-    app.post('/api/', function (req, res) {
+    app.post('/', function (req, res) {
         const url = req.body['url'];
 
         try {
@@ -32,13 +32,13 @@ module.exports = app => {
         return res.status(201).json(shortenedUrlId);
     })
 
-    app.delete('/api/', function (req, res) {
+    app.delete('/', function (req, res) {
         urlRepository.deleteAll();
         return res.status(204).send();
     })
 
     // :id identificator of a URL and new URL (url in body)
-    app.put('/api/:id', function (req, res) {
+    app.put('/:id', function (req, res) {
         const newUrl = req.body['url'];
         try {
             isUri(newUrl);
@@ -59,7 +59,7 @@ module.exports = app => {
     })
 
     // :id identificator of a URL
-    app.delete('/api/:id', function (req, res) {
+    app.delete('/:id', function (req, res) {
         try {
             urlRepository.delete(req.params.id);
             return res.status(204).send();
@@ -69,7 +69,7 @@ module.exports = app => {
     })
 
     // :id identificator of a URL 
-    app.get('/api/:id', function (req, res) {
+    app.get('/:id', function (req, res) {
         try {
             const url = urlRepository.get(req.params.id);
             return res.status(301).json(url.originalUrl);
