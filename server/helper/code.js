@@ -1,14 +1,17 @@
 const table = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 class Code{
     constructor(){
-        this.keys = new Array();
+        this.numericId = 0;
     }
 
-    getSmallestIndex(){
-        // TODO: make smarter
-        if (this.keys.length == 0)  return 0;
-        this.keys.sort((a, b) => a - b);
-        return this.keys[this.keys.length - 1] + 1;
+    getAutoincrementedId(keys){
+        let id = this.encode(this.numericId);
+        while (keys.includes(id)) {
+            if (this.numericId == Number.MAX_SAFE_INTEGER) throw new Error("Reached Id limit");
+            this.numericId++;
+            id = this.encode(this.numericId);
+        }
+        return id;
     }
 
     encode(number){
