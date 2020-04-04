@@ -38,7 +38,7 @@
       <hr>
       <b-row class="mb-4">
         <b-col cols="7" class="text-left">
-        <h3>Find or delete your url by ID</h3>
+        <h3>Get or delete your url by ID</h3>
           <b-form @submit="onShortendSubmit" v-if="show">
             <b-input-group prepend="ID" class>
               <b-form-input required v-model="shortendurlcode"></b-form-input>
@@ -223,6 +223,7 @@ export default {
               this.$bvToast.toast("This is not a valid URL", {
                 title:
                   "Invalid URL",
+                variant: "danger",
                 toaster: "b-toaster-top-center"
               });
             } else {
@@ -234,7 +235,8 @@ export default {
             }
         })
     },
-    onUpdateFormReset() {
+    onUpdateFormReset(evt) {
+      evt.preventDefault();
       this.formUpdate.newUrl = "";
       this.formUpdate.urlId = "";
     },
