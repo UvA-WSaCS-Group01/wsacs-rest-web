@@ -1,3 +1,4 @@
+// Source: https://gist.github.com/dperini/729294
 var re_weburl = new RegExp(
     "^" +
       // protocol identifier (optional)
