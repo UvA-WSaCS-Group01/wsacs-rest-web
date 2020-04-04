@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col cols="12">
-        <h3>Shorten your URL</h3>
+          <h3>Create a new shortURL</h3>
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group
               id="input-group-1"
@@ -13,55 +13,68 @@
               <b-form-input id="input-1" v-model="form.url" required placeholder="URL"></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-4">
-              <b-form-checkbox v-model="form.checked">Use your own ID</b-form-checkbox>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-2"
-              label-for="input-2"
-              v-if="form.checked"
-              description="Provide the id to shorten your URL to (if available)."
-            >
-              <b-form-input
-                id="input-2"
-                :required="form.checked ? true : false"
-                v-model="form.code"
-                placeholder="Your favoured id"
-              ></b-form-input>
-            </b-form-group>
-
             <b-button type="submit" variant="primary">Submit</b-button>
           </b-form>
         </b-col>
       </b-row>
-      <hr>
+      <hr />
       <b-row class="mb-4">
-        <b-col cols="7" class="text-left">
-        <h3>Find or delete your url by ID</h3>
+        <b-col cols="12" class="text-left">
+          <h3>Get or Delete Your Existing shortURL</h3>
           <b-form @submit="onShortendSubmit" v-if="show">
-            <b-input-group prepend="ID" class>
-              <b-form-input required v-model="shortendurlcode"></b-form-input>
-              <b-input-group-append>
-                <b-button variant="outline-primary" value="open" type="submit">Get</b-button>
-                <b-button variant="outline-danger" value="delete" type="submit">Delete</b-button>
-              </b-input-group-append>
-            </b-input-group>
+            <b-form-group
+              description="Type the shortURL ID you want to redirect to or delete in the field above."
+            >
+              <b-input-group prepend="ID">
+                <b-form-input required v-model="shortendurlcode"></b-form-input>
+                <b-input-group-append>
+                  <b-button variant="outline-primary" value="open" type="submit">Get</b-button>
+                  <b-button variant="outline-danger" value="delete" type="submit">Delete</b-button>
+                </b-input-group-append>
+              </b-input-group>
+            </b-form-group>
           </b-form>
         </b-col>
       </b-row>
-      <hr>
-      <b-row>
-        <b-col cols="5">
-          <h3>Get a List of ID's or Delete all ID's</h3>
-            <b-button variant="outline-primary" @click="getAll" class="mr-2">List Keys</b-button>
-            <b-modal ref="modal-keys" id="modal-keys" title="Allocated URL Keys" ok-only>
-              <b-container>
-                <b-row v-for="key in keys" :key="key.id">{{key}}</b-row>
+      <hr />
+      <b-row class="mb-4">
+        <b-col cols="12" class="text-left">
+          <h3>Create Or Update a specific shortURL</h3>
+          <b-form @submit="onUpdateSubmit" @reset="onUpdateFormReset" v-if="show">
+            <b-form-group
+              description="Add your URL and the desired ID of your shortURL in the fields above."
+            >
+              <b-container class="p-0">
+                <b-row>
+                  <b-col cols="4">
+                    <b-input-group prepend="ID">
+                      <b-form-input required v-model="formUpdate.urlId"></b-form-input>
+                    </b-input-group>
+                  </b-col>
+                  <b-col cols="8">
+                    <b-input-group prepend="New URL">
+                      <b-form-input required v-model="formUpdate.newUrl"></b-form-input>
+                    </b-input-group>
+                  </b-col>
+                </b-row>
               </b-container>
-            </b-modal>
-            <b-button @click="onDeleteAll" variant="outline-danger">Delete All</b-button>
-          </b-col>
+            </b-form-group>
+            <b-button type="submit" variant="primary">Submit</b-button>
+          </b-form>
+        </b-col>
+      </b-row>
+      <hr />
+      <b-row>
+        <b-col cols="12">
+          <h3>Get a List of ID's or Delete all ID's</h3>
+          <b-button variant="outline-primary" @click="getAll" class="mr-2">List Keys</b-button>
+          <b-modal ref="modal-keys" id="modal-keys" title="Allocated URL Keys" ok-only>
+            <b-container>
+              <b-row v-for="key in keys" :key="key.id">{{key}}</b-row>
+            </b-container>
+          </b-modal>
+          <b-button @click="onDeleteAll" variant="outline-danger">Delete All</b-button>
+        </b-col>
       </b-row>
     </b-container>
   </div>
@@ -74,14 +87,17 @@ export default {
   name: "UrlShortenerClient",
   data: function() {
     return {
-      api: new Api("http://localhost:8082/api/"),
+      api: new Api("http://localhost:8082"),
       form: {
         url: "",
-        checked: false,
         code: "",
         clickedBtn: ""
       },
       shortendurlcode: "",
+      formUpdate: {
+        urlId: "",
+        newUrl: ""
+      },
       keys: [],
       show: true
     };
@@ -91,17 +107,12 @@ export default {
       evt.preventDefault();
       let request;
       let url = this.form.url;
-      if (this.form.checked) {
-        request = this.api.put_by_id(this.form.code, this.form.url);
-      } else {
-        request = this.api.post(this.form.url);
-      }
 
+      request = this.api.post(this.form.url);
       request
         .then(resp => {
-          console.log(resp.data)
+          console.log(resp.data);
           let text = `We converted ${url} to the id ${resp.data}`;
-          if (this.form.checked)  {text = `Your shortURL was updated to ${url}`}
 
           this.$bvToast.toast(text, {
             title: "We shortend your URL",
@@ -185,6 +196,48 @@ export default {
 
       // alert(JSON.stringify(this.form));
     },
+    onUpdateSubmit(evt) {
+      evt.preventDefault();
+      let request;
+
+      request = this.api.put_by_id(
+        this.formUpdate.urlId,
+        this.formUpdate.newUrl
+      );
+      request
+        .then(() => {
+          this.$bvToast.toast(
+            "Updated URL of " +
+              this.formUpdate.urlId +
+              " to " +
+              this.formUpdate.newUrl,
+            {
+              title: "Your Entry was updated",
+              toaster: "b-toaster-top-center"
+            }
+          );
+        })
+        .catch(err => {
+          if (err.response.status == 400) {
+            this.$bvToast.toast("This is not a valid URL", {
+              title: "Invalid URL",
+              variant: "danger",
+              toaster: "b-toaster-top-center"
+            });
+          } else {
+            this.$bvToast.toast("This is not a valid shortURL", {
+              title:
+                "Invalid shortURL - entry might be deleted or is non-existent",
+              toaster: "b-toaster-top-center"
+            });
+          }
+        });
+    },
+    onUpdateFormReset(evt) {
+      evt.preventDefault();
+      this.formUpdate.newUrl = "";
+      this.formUpdate.urlId = "";
+    },
     resetShortendForm() {
       this.shortendurlcode = "";
       this.show = false;
@@ -196,7 +249,6 @@ export default {
       evt.preventDefault();
       this.form.url = "";
       this.form.code = "";
-      this.form.checked = false;
       this.show = false;
       this.$nextTick(() => {
         this.show = true;

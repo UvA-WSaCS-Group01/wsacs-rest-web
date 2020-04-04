@@ -1,7 +1,20 @@
-const table = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const table = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+class Code{
+    constructor(){
+        this.numericId = 0;
+    }
 
-module.exports = {
-    encode: function(number){
+    getAutoincrementedId(keys){
+        let id = this.encode(this.numericId);
+        while (keys.includes(id)) {
+            if (this.numericId == Number.MAX_SAFE_INTEGER) throw new Error("Reached Id limit");
+            this.numericId++;
+            id = this.encode(this.numericId);
+        }
+        return id;
+    }
+
+    encode(number){
         // max possible number: 9007199254740981
         // can lead to 145277407334531 + 1 long string -> fails for me 
         const N = table.length;
@@ -15,9 +28,9 @@ module.exports = {
         }
         if (code == "") return "0";
         return code;
-    },
+    }
 
-    decode: function(code) {
+    decode(code){
         var i;
         let id = 0;
         const N = table.length;
@@ -29,5 +42,5 @@ module.exports = {
 
         return id
     }
-
-};
+}
+module.exports = { Code };
