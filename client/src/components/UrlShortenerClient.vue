@@ -51,6 +51,23 @@
         </b-col>
       </b-row>
       <hr>
+      <b-row class="mb-4">
+        <b-col cols="7" class="text-left">
+        <h3>Update your URL</h3>
+            <b-form @submit="onUpdateSubmit" @reset="onUpdateFormReset" v-if="show">
+              <b-form-group>
+                <b-input-group prepend="ID" class>
+                  <b-form-input required v-model="formUpdate.urlId"></b-form-input>
+                </b-input-group>
+                <b-input-group prepend="New URL" class>
+                  <b-form-input required v-model="formUpdate.newUrl"></b-form-input>
+                </b-input-group>
+              </b-form-group>
+              <b-button type="submit" variant="primary">Submit</b-button>
+            </b-form>
+        </b-col>
+      </b-row>
+      <hr>
       <b-row>
         <b-col cols="12">
           <h3>Get a List of ID's or Delete all ID's</h3>
@@ -82,6 +99,10 @@ export default {
         clickedBtn: ""
       },
       shortendurlcode: "",
+      formUpdate:{
+        urlId:"",
+        newUrl:""
+      },
       keys: [],
       show: true
     };
@@ -92,7 +113,7 @@ export default {
       let request;
       let url = this.form.url;
       if (this.form.checked) {
-        request = this.api.put_by_id(this.form.code, this.form.url);
+        request = this.api.post_by_own_id(this.form.code, this.form.url);
       } else {
         request = this.api.post(this.form.url);
       }
@@ -184,6 +205,38 @@ export default {
       }
 
       // alert(JSON.stringify(this.form));
+    },
+    onUpdateSubmit(evt) {
+      evt.preventDefault();
+      let request;
+
+      request = this.api.put_by_id(this.formUpdate.urlId, this.formUpdate.newUrl);
+      request
+        .then(() => {
+          this.$bvToast.toast("Updated URL of " + this.formUpdate.urlId + " to " + this.formUpdate.newUrl, {
+              title: "Your Entry was updated",
+              toaster: "b-toaster-top-center"
+            });
+        })
+        .catch(err =>{
+          if (err.response.status == 400) {
+              this.$bvToast.toast("This is not a valid URL", {
+                title:
+                  "Invalid URL",
+                toaster: "b-toaster-top-center"
+              });
+            } else {
+              this.$bvToast.toast("This is not a valid shortURL", {
+                title:
+                  "Invalid shortURL - entry might be deleted or is non-existent",
+                toaster: "b-toaster-top-center"
+              });
+            }
+        })
+    },
+    onUpdateFormReset() {
+      this.formUpdate.newUrl = "";
+      this.formUpdate.urlId = "";
     },
     resetShortendForm() {
       this.shortendurlcode = "";
