@@ -33,7 +33,7 @@ class ShortenedUrlsRepository extends Array{
     }
 
     getAll(){
-        return this;
+        return Object.keys(this);
     }
 
     _findIndex(urlId){

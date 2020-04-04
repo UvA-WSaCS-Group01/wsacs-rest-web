@@ -1,12 +1,10 @@
 const { WINDOW_LOCATION_ORIGIN, PORT } = require('../config/constants');
 const { urlShorten } = require('../models/urlShorten');
-// const { ShortenedUrlsRepository } = require('../services/shortenedUrlRepository');
 const { ShortenedUrlsRepository } = require('../services/urlRepository');
 const { isUri } = require('../helper/web-url-validation');
 const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
 const { Code } = require('../helper/code');
 
-// var urlRepository = new ShortenedUrlsRepository();
 const urlRepository = new ShortenedUrlsRepository();
 const code = new Code();
 
@@ -25,11 +23,8 @@ module.exports = app => {
             return res.status(400).send("error");
         }
 
-        // if an url:
-        let index = code.getSmallestIndex();
-        code.keys.push(index); // TODO: This might be removed
-        var shortenedUrlId = code.encode(index);
-        const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
+        let shortenedUrlId = code.getAutoincrementedId(urlRepository.getAll());
+        const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT; // TODO: Why would this be necessary?
         let shortenedUrlObject = new urlShorten(url, shortBaseUrl + '/' + shortenedUrlId, shortenedUrlId);
 
         shortenedUrlObject = urlRepository.add(shortenedUrlObject);
@@ -47,10 +42,6 @@ module.exports = app => {
         const newUrl = req.body['url'];
         try {
             isUri(newUrl);
-            // TODO: validate if key is valid 
-            // Lucien: Decoding not needed. Use id as id for hashmap.
-            // let index = code.decode(req.params.id);
-            // console.log(index);
             const shortBaseUrl = WINDOW_LOCATION_ORIGIN + ':' + PORT;
             let shortenedUrlObject = new urlShorten(newUrl, shortBaseUrl + '/' + req.params.id, req.params.id);
             urlRepository.update(shortenedUrlObject);
