@@ -37,13 +37,6 @@ export default class Api {
           });
     }
 
-    async post_by_own_id(id, url) {
-        return await this._http.post("/", {
-            url: url,
-            id: id
-          });
-    }
-
     async delete() {
         return await this._http.delete("/");
     }

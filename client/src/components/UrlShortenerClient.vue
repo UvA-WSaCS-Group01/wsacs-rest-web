@@ -13,24 +13,6 @@
               <b-form-input id="input-1" v-model="form.url" required placeholder="URL"></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-4">
-              <b-form-checkbox v-model="form.checked">Use your own ID</b-form-checkbox>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-2"
-              label-for="input-2"
-              v-if="form.checked"
-              description="Provide the id to shorten your URL to (if available)."
-            >
-              <b-form-input
-                id="input-2"
-                :required="form.checked ? true : false"
-                v-model="form.code"
-                placeholder="Your favoured id"
-              ></b-form-input>
-            </b-form-group>
-
             <b-button type="submit" variant="primary">Submit</b-button>
           </b-form>
         </b-col>
@@ -94,7 +76,6 @@ export default {
       api: new Api("http://localhost:8082/api/"),
       form: {
         url: "",
-        checked: false,
         code: "",
         clickedBtn: ""
       },
@@ -112,17 +93,12 @@ export default {
       evt.preventDefault();
       let request;
       let url = this.form.url;
-      if (this.form.checked) {
-        request = this.api.post_by_own_id(this.form.code, this.form.url);
-      } else {
-        request = this.api.post(this.form.url);
-      }
-
+      
+      request = this.api.post(this.form.url);
       request
         .then(resp => {
           console.log(resp.data)
           let text = `We converted ${url} to the id ${resp.data}`;
-          if (this.form.checked)  {text = `The shortURL id ${this.form.code} was set to ${url}`}
 
           this.$bvToast.toast(text, {
             title: "We shortend your URL",
@@ -251,7 +227,6 @@ export default {
       evt.preventDefault();
       this.form.url = "";
       this.form.code = "";
-      this.form.checked = false;
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
