@@ -1,3 +1,5 @@
+const { NotFoundError } = require('../models/customErrors');
+
 class ShortenedUrlsRepository{
     constructor(){
         this.map = new Map();
@@ -19,11 +21,9 @@ class ShortenedUrlsRepository{
     update(newUrlShorten){
         const now = Date.now();
         let urlShorten = this.map.get(newUrlShorten.id);
+        console.log(urlShorten);
         if(urlShorten === undefined){
-            // resource does not exist. Update createdAt field of passed object.
-            
-            newUrlShorten.createdAt = now;
-            this.map.set(newUrlShorten.id, newUrlShorten);
+            throw new NotFoundError("error");
         } else{
             urlShorten.updatedAt = now;
             urlShorten.originalUrl = newUrlShorten.originalUrl
