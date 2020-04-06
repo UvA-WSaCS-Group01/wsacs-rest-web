@@ -39,7 +39,7 @@
       <hr />
       <b-row class="mb-4">
         <b-col cols="12" class="text-left">
-          <h3>Create Or Update a specific shortURL</h3>
+          <h3>Update a specific shortURL</h3>
           <b-form @submit="onUpdateSubmit" @reset="onUpdateFormReset" v-if="show">
             <b-form-group
               description="Add your URL and the desired ID of your shortURL in the fields above."
@@ -225,9 +225,9 @@ export default {
               toaster: "b-toaster-top-center"
             });
           } else {
-            this.$bvToast.toast("This is not a valid shortURL", {
+            this.$bvToast.toast("Entry might be deleted or is non-existent", {
               title:
-                "Invalid shortURL - entry might be deleted or is non-existent",
+                "Invalid shortURL",
               toaster: "b-toaster-top-center"
             });
           }

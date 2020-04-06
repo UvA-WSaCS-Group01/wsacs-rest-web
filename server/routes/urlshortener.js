@@ -2,7 +2,7 @@ const { WINDOW_LOCATION_ORIGIN, PORT } = require('../config/constants');
 const { urlShorten } = require('../models/urlShorten');
 const { ShortenedUrlsRepository } = require('../services/urlRepository');
 const { isUri } = require('../helper/web-url-validation');
-const { IndexNotFoundError, NotFoundError } = require('../models/customErrors');
+const { NotFoundError } = require('../models/customErrors');
 const { Code } = require('../helper/code');
 
 const urlRepository = new ShortenedUrlsRepository();
@@ -48,7 +48,7 @@ module.exports = app => {
             return res.status(200).send();
         } catch (error) {
             switch (true) {
-                case (error instanceof IndexNotFoundError):
+                case (error instanceof NotFoundError):
                     return res.status(404).send();
                 case (error instanceof URIError):
                     return res.status(400).send("error");
