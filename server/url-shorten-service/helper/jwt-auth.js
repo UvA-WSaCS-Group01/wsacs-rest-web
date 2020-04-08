@@ -14,7 +14,9 @@ const authenticateJWT = (req, res, next) => {
             req.user = user;
             next();
         });
-    } 
+    } else{
+        return res.status(403).send("forbidden");
+    }
 };
 
 
