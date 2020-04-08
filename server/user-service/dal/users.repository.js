@@ -3,8 +3,12 @@ class UserRepository{
         this.users = new Array();
     }
 
-    find(userName, password){
-        return this.users.find(u => u.userName === userName && u.password === password);
+    find(username, password){
+        return this.users.find(u => u.username === username && u.password === password);
+    }
+
+    findByUserName(username){
+        return this.users.find(u => u.username === username);
     }
 
     create(user){
