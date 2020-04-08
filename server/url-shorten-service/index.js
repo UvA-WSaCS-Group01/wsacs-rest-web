@@ -19,6 +19,7 @@ app.use(function(req, res, next) {
      next();
    }
  });
+
  require('./routes/urlshortener')(app);
 
  var server = app.listen(constants.PORT, function () {

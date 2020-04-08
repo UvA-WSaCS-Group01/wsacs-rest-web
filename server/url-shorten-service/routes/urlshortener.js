@@ -4,17 +4,18 @@ const { ShortenedUrlsRepository } = require('../services/urlRepository');
 const { isUri } = require('../helper/web-url-validation');
 const { NotFoundError } = require('../models/customErrors');
 const { Code } = require('../helper/code');
+const { authenticateJWT } = require('../helper/jwt-auth');
 
 const urlRepository = new ShortenedUrlsRepository();
 const code = new Code();
 
 module.exports = app => {
-    app.get('/', function (req, res) {
+    app.get('/', authenticateJWT, function (req, res) {
         return res.send(urlRepository.getAll());
     })
 
     // :url (in body) URL to shorten
-    app.post('/', function (req, res) {
+    app.post('/', authenticateJWT, function (req, res) {
         const url = req.body['url'];
 
         try {
@@ -32,13 +33,13 @@ module.exports = app => {
         return res.status(201).json(shortenedUrlId);
     })
 
-    app.delete('/', function (req, res) {
+    app.delete('/', authenticateJWT, function (req, res) {
         urlRepository.deleteAll();
         return res.status(204).send();
     })
 
     // :id identificator of a URL and new URL (url in body)
-    app.put('/:id', function (req, res) {
+    app.put('/:id', authenticateJWT, function (req, res) {
         const newUrl = req.body['url'];
         try {
             isUri(newUrl);
@@ -59,7 +60,7 @@ module.exports = app => {
     })
 
     // :id identificator of a URL
-    app.delete('/:id', function (req, res) {
+    app.delete('/:id', authenticateJWT, function (req, res) {
         try {
             urlRepository.delete(req.params.id);
             return res.status(204).send();

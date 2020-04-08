@@ -1,8 +1,5 @@
 const { UserService } = require('../services/users.service');
 
-// secret to sign JWT token. Should ideally be env variable to inject from a config which is somewhere securely located.
-const accessTokenSecret = 'secret'; 
-
 const userService = new UserService();
 module.exports = app => {
 

@@ -1,20 +1,18 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const { SECRET } = require('../config/constants');
+const config = require('../../config.json');
 const { UserRepository } = require('../dal/users.repository');
 const { User } = require('../models/user');
 const userRepository = new UserRepository();
 
 class UserService{
-    constructor(){
-
-    }
+    constructor(){}
 
     authenticate(credentials){
         const user = userRepository.findByUserName(credentials.username);
         if(user && bcrypt.compareSync(credentials.password, user.hashedPassword)){
-            return jwt.sign({sub: user.username}, SECRET, { expiresIn: '20min'});
+            return jwt.sign({sub: user.username}, config.JWT_SECRET, { expiresIn: '20min'});
         }
     }
 
