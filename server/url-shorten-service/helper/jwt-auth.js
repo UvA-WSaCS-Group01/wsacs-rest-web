@@ -8,14 +8,14 @@ const authenticateJWT = (req, res, next) => {
 
         jwt.verify(token, config.JWT_SECRET, (err, user) => {
             if (err) {
-                return res.status(403).send("forbidden");
+                return res.status(403).send("forbidden\n");
             }
 
             req.user = user;
             next();
         });
     } else{
-        return res.status(403).send("forbidden");
+        return res.status(403).send("forbidden\n");
     }
 };
 
