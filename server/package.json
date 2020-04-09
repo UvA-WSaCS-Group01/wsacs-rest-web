@@ -1,17 +1,9 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js --ignore tests"
-  },
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3",
-    "nodemon": "^1.11.0"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "user-service": "cd user-service && npm run start",
+        "url-shortener": "cd url-shorten-service && npm run start"
+    }
 }
