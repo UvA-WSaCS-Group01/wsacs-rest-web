@@ -21,7 +21,7 @@ module.exports = app => {
         try {
             isUri(url);
         } catch (error) {
-            return res.status(400).send("error");
+            return res.status(400).send("error\n");
         }
 
         let shortenedUrlId = code.getAutoincrementedId(urlRepository.getAll());
@@ -30,7 +30,7 @@ module.exports = app => {
 
         shortenedUrlObject = urlRepository.add(shortenedUrlObject);
 
-        return res.status(201).json(shortenedUrlId);
+        return res.status(201).json(shortenedUrlId +"\n");
     })
 
     app.delete('/', authenticateJWT, function (req, res) {
@@ -52,9 +52,9 @@ module.exports = app => {
                 case (error instanceof NotFoundError):
                     return res.status(404).send();
                 case (error instanceof URIError):
-                    return res.status(400).send("error");
+                    return res.status(400).send("error\n");
                 default:
-                    return res.status(400).send("error");
+                    return res.status(400).send("error\n");
             }
         }
     })
@@ -73,7 +73,7 @@ module.exports = app => {
     app.get('/:id', function (req, res) {
         try {
             const url = urlRepository.get(req.params.id);
-            return res.status(301).json(url.originalUrl);
+            return res.status(301).json(url.originalUrl + "\n");
         } catch (error) {
             return res.status(404).send();
         }
