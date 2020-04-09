@@ -12,7 +12,9 @@ class UserService{
     authenticate(credentials){
         const user = userRepository.findByUserName(credentials.username);
         if(user && bcrypt.compareSync(credentials.password, user.hashedPassword)){
-            return jwt.sign({sub: user.username}, config.JWT_SECRET, { expiresIn: '20min'});
+            return jwt.sign({sub: user.username}, config.JWT_SECRET, 
+                // { expiresIn: '20min'}
+            );
         }
     }
 

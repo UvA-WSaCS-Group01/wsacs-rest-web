@@ -3,7 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const constants = require('./config/constants');
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+    strict:false
+}));
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 })); 

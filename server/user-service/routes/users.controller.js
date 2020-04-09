@@ -14,7 +14,7 @@ module.exports = app => {
 
     app.post('/users/login', (req, res) => {
         const token = userService.authenticate(req.body)
-        token ? res.status(200).send(token) : res.status(403).send("forbidden");   
+        token ? res.status(200).send(token + "\n") : res.status(403).send("forbidden\n");   
     });
 
 }
