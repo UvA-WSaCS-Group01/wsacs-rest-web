@@ -1,0 +1,16 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "user-service": "cd user-service && npm run start",
+        "url-shortener": "cd url-shorten-service && npm run start"
+    },
+    "dependencies": {
+        "jsonwebtoken": "^8.5.1",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.17.2",
+        "express": "^4.15.3",
+        "nodemon": "^1.11.0"
+    }
+}
