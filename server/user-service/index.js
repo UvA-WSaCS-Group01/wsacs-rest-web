@@ -21,6 +21,7 @@ app.use(function(req, res, next) {
     }
 });
 require('./routes/users.controller')(app);
+require('./routes/health.controller')(app);
 
 var server = app.listen(constants.PORT, function () {
     var host = server.address().address
