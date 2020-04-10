@@ -4,7 +4,7 @@ This is a REST-based web micro service architecture to shorten URLs with user au
 ## Installation Server
 Server is built in the following environment:
 - node `8.10.0` @ `Ubuntu 18.04`
-- npm `6.14.4` @ `Ubuntu 18.04`
+- npm `3.5.2` @ `Ubuntu 18.04`
 
 Prior running:
 - Run `npm install` in the `server` folder.
