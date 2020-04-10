@@ -7,7 +7,7 @@ Server is built in the following environment:
 - npm `3.5.2` @ `Ubuntu 18.04`
 
 Prior running:
-- Run `npm install` in the `server` folder.
+- Run `npm install` in the both the `server/url-shorten-service` and `server/user-service` directory.
 
 ## Run the User Service
 
