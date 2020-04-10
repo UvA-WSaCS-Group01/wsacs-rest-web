@@ -20,6 +20,7 @@ app.use(function(req, res, next) {
    }
  });
 
+ require('./routes/health.controller')(app);
  require('./routes/urlshortener')(app);
 
  var server = app.listen(constants.PORT, function () {
