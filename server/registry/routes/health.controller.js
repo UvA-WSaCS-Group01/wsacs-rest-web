@@ -10,10 +10,16 @@ module.exports = (app, registerService) => {
             let promises = [];
             promises = services.map(service => {
                 console.log(service.location);
-                new Promise((resolve, reject) => {
-                    return fetch(service.location+"/health");
+                return new Promise((resolve, reject) => {
+                    fetch(service.location+"/health").then((req) => {
+                            resolve(req)
+                        }
+                    ).catch((err) => {
+                        reject(err);
+                    })
                 })
             });
+            console.log(promises);
             Promise.all(promises)
                 .then((ok) => {
                     // Not tested... 
