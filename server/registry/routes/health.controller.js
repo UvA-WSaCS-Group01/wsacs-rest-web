@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 module.exports = (app, registerService) => {
 
     app.get('/health', (req, res) => {
@@ -8,7 +10,9 @@ module.exports = (app, registerService) => {
             let promises = [];
             promises = services.map(service => {
                 console.log(service.location);
-                return fetch(service.location+"/health");
+                new Promise((resolve, reject) => {
+                    return fetch(service.location+"/health");
+                })
             });
             Promise.all(promises)
                 .then((ok) => {
