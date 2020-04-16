@@ -5,5 +5,8 @@
     "scripts": {
         "user-service": "cd user-service && npm run start",
         "url-shortener": "cd url-shorten-service && npm run start"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.0"
     }
 }

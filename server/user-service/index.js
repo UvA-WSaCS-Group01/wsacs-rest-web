@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const constants = require('./config/constants');
+const fetch = require('node-fetch');
 
 app.use(bodyParser.json({
     strict:false
@@ -27,5 +28,16 @@ var server = app.listen(constants.PORT, function () {
     var host = server.address().address
     var port = server.address().port
     
+    // Register
+    const body = {"location": host+":"+port};
+    fetch('http://localhost:8084/service', {
+            method: 'post',
+            body:    JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(res => res.json())
+        .then(json => console.log("Registered as: " +json))
+        .catch(err => console.log(err));
+
     console.log("User Service listening at http://%s:%s", host, port)
 })
