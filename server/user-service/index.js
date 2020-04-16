@@ -28,8 +28,12 @@ var server = app.listen(constants.PORT, function () {
     var host = server.address().address
     var port = server.address().port
     
+    if(host === '::'){
+        host = "localhost"
+    }
+
     // Register
-    const body = {"location": host+":"+port};
+    const body = {"location": "http://"+host +":"+port};
     fetch('http://localhost:8084/service', {
             method: 'post',
             body:    JSON.stringify(body),

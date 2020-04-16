@@ -1,12 +1,10 @@
-// const { NotFoundError } = require('../models/customErrors');
-
 class RegisterService{
     constructor(){
         this.list = new Array();
     }
 
-    add(service){
-        this.list[this.list.length] = service;
+    add(serviceLocation){
+        this.list[this.list.length] = serviceLocation;
         return this.list.length - 1;
     }
     
