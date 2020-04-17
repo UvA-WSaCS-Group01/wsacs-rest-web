@@ -1,0 +1,27 @@
+version: '2.2'
+services:
+  loadbalancer:
+    build:
+      context: reverseproxy/
+    volumes:
+      - ./reverseproxy/:/src/
+    ports:
+      - "8080:80"
+  registry:
+    build:
+      context: server/registry/ 
+  userservice-01:
+    build:
+      context: server/user-service/
+    environment:
+      - REGISTRY_NAME=registry
+  url-shortener-01:
+    build:
+      context: server/url-shorten-service/
+    environment:
+      - REGISTRY_NAME=registry
+  url-shortener-02:
+    build:
+      context: server/url-shorten-service/
+    environment:
+      - REGISTRY_NAME=registry
