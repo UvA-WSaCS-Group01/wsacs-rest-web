@@ -33,7 +33,7 @@ var server = app.listen(constants.PORT, function () {
     }
 
     // Register
-    const body = {"location": "http://"+host +":"+port};
+    const body = {"service": "User Service", "location": "http://"+host +":"+port};
     fetch('http://localhost:8084/service', {
             method: 'post',
             body:    JSON.stringify(body),

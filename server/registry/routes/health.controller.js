@@ -21,12 +21,14 @@ module.exports = (app, registerService) => {
             });
             console.log(promises);
             Promise.all(promises)
-                .then((ok) => {
-                    // Not tested... 
-                    console.log("All promises resolved" +ok)
-                    res.status(200).send(ok.body);
+                .then((value) => {
+                    console.log("All promises resolved.")
+                    res.status(200).send(services);
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    // registerService.remove(getServices(err)) remove inactive service
+                    res.status(200).send(err.message);
+                })
         } catch (error) {
             res.status(500).send(error)
         }
