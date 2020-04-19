@@ -11,7 +11,7 @@ Prior running:
 
 ## Run the Registry
 1. Run `npm run registry` to start the registry (do this before other sercices start).
-2. Registry listens on `localhost:8083`
+2. Registry listens on `localhost:8084`
 
 ## Run the User Service
 
