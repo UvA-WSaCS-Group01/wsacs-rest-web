@@ -37,7 +37,7 @@ app.use(function(req, res, next) {
     }
 
     // Register
-    const body = {"location": "http://"+host +":"+port};
+    const body = {"service": "Url Shortener Service","location": "http://"+host +":"+port};
     let central_registry = `http://${process.env.REGISTRY_NAME ? process.env.REGISTRY_NAME : "localhost" }:8084/service`;
 
     fetch(central_registry, {

@@ -3,10 +3,8 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
+        "registry": "cd registry && npm run start",
         "user-service": "cd user-service && npm run start",
         "url-shortener": "cd url-shorten-service && npm run start"
-    },
-    "dependencies": {
-        "node-fetch": "^2.6.0"
     }
 }

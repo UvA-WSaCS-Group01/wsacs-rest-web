@@ -9,6 +9,10 @@ Server is built in the following environment:
 Prior running:
 - Run `npm install` in the `server` folder.
 
+## Run the Registry
+1. Run `npm run registry` to start the registry (do this before other sercices start).
+2. Registry listens on `localhost:8084`
+
 ## Run the User Service
 
 1. Run `npm run user-service` to start the user service.
