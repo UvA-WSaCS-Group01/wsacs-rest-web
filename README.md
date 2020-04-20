@@ -35,3 +35,7 @@ Prior running:
 * Run `curl -L -X DELETE 'http://localhost/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete a shortened URL
 * Run `curl -L -X GET 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to get the list of IDs.
 * Run `curl -L -X DELETE 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete all URLS
+
+## Loadbalancing Demo:
+
+- The demo for loadbalacing can be found [here](./LOADBALANCING.md)
