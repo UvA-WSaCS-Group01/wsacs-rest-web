@@ -5,7 +5,6 @@ module.exports = (app, registerService) => {
     app.get('/health', (req, res) => {
         try {
             const services = registerService.getAll();
-            console.log("Amount of registered services: " +services.length);
 
             let promises = [];
             promises = services.map(service => {
@@ -19,7 +18,7 @@ module.exports = (app, registerService) => {
                     })
                 })
             });
-            console.log(promises);
+
             Promise.all(promises)
                 .then((value) => {
                     console.log("All promises resolved.")
