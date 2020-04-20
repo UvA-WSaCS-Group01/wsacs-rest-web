@@ -33,8 +33,8 @@ Prior running:
 ## Test the URL-Shortener Service
 
 * Run `curl -L -X POST 'http://localhost:8082/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json' --data-raw '{"url":"http://www.nu.nl"}'` to shorten the URL and receive an ID.
-* Run `curl -L -X GET 'http://localhost/<ID HERE>' -H 'Content-Type: application/json'` to get the shortened URL
-* Run `curl -L -X PUT 'http://localhost/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json' --data-raw '{"url":"<NEW URL HERE>"}'` to update a shortened URL with a new URL.
-* Run `curl -L -X DELETE 'http://localhost/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete a shortened URL
-* Run `curl -L -X GET 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to get the list of IDs.
-* Run `curl -L -X DELETE 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete all URLS
+* Run `curl -L -X GET 'http://localhost:8082/<ID HERE>' -H 'Content-Type: application/json'` to get the shortened URL
+* Run `curl -L -X PUT 'http://localhost:8082/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json' --data-raw '{"url":"<NEW URL HERE>"}'` to update a shortened URL with a new URL.
+* Run `curl -L -X DELETE 'http://localhost:8082/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete a shortened URL
+* Run `curl -L -X GET 'http://localhost:8082/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to get the list of IDs.
+* Run `curl -L -X DELETE 'http://localhost:8082/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete all URLS
