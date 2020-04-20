@@ -4,12 +4,15 @@ This is a REST-based web micro service architecture to shorten URLs with user au
 ## Installation Server
 Server is built in the following environment:
 - node `8.10.0` @ `Ubuntu 18.04`
-- npm `6.14.4` @ `Ubuntu 18.04`
+- npm `3.5.2` @ `Ubuntu 18.04`
 
 Prior running:
-- Run `npm install` in the `server` folder.
+- Run `npm install` in the following directories:
+  * `server/url-shorten-service`
+  * `server/user-service`
+  * `server/registry`
 
-## Run the Registry
+## Run the Registry Service
 1. Run `npm run registry` to start the registry (do this before other sercices start).
 2. Registry listens on `localhost:8084`
 
@@ -35,6 +38,10 @@ Prior running:
 * Run `curl -L -X DELETE 'http://localhost/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete a shortened URL
 * Run `curl -L -X GET 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to get the list of IDs.
 * Run `curl -L -X DELETE 'http://localhost/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete all URLS
+
+## Test the Registry Service
+
+* Run `curl -L -X GET 'http://localhost:8084/health' -H 'Content-Type:application/json'` to get the locations of all services.
 
 ## Loadbalancing Demo:
 
