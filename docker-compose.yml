@@ -4,7 +4,7 @@ services:
     build:
       context: reverseproxy/
     volumes:
-      - ./reverseproxy/:/src/
+      - ./reverseproxy/conf.d/:/etc/nginx/conf.d/
     ports:
       - "8080:80"
     depends_on:
