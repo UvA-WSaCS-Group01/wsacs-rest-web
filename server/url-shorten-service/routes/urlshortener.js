@@ -30,7 +30,7 @@ module.exports = app => {
 
         shortenedUrlObject = urlRepository.add(shortenedUrlObject);
 
-        return res.status(201).json(shortenedUrlId +"\n");
+        return res.status(201).json(shortenedUrlId);
     })
 
     app.delete('/', authenticateJWT, function (req, res) {
@@ -73,7 +73,7 @@ module.exports = app => {
     app.get('/:id', function (req, res) {
         try {
             const url = urlRepository.get(req.params.id);
-            return res.status(301).json(url.originalUrl + "\n");
+            return res.status(301).json(url.originalUrl);
         } catch (error) {
             return res.status(404).send();
         }
