@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const config = require('../../config.json');
+const config = require('../config.json');
 const { UserRepository } = require('../dal/users.repository');
 const { User } = require('../models/user');
 const userRepository = new UserRepository();

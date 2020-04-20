@@ -42,3 +42,8 @@ Prior running:
 ## Test the Registry Service
 
 * Run `curl -L -X GET 'http://localhost:8084/health' -H 'Content-Type:application/json'` to get the locations of all services.
+
+## Loadbalancing Demo:
+
+- The demo for loadbalancing on windows 10 can be found [here](./LOADBALANCING.md) 
+- The demo for loadbalancing on Ubuntu 18.04 can be found [here](./LOADBALANCING_UBUNTU.md)  

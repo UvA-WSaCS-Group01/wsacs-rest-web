@@ -28,13 +28,19 @@ var server = app.listen(constants.PORT, function () {
     var host = server.address().address
     var port = server.address().port
     
-    if(host === '::'){
-        host = "localhost"
+    if (process.env.HOSTNAME) {
+        host = process.env.HOSTNAME
+    } else {
+        if(host === '::'){
+            host = "localhost"
+        }
     }
 
     // Register
     const body = {"service": "User Service", "location": "http://"+host +":"+port};
-    fetch('http://localhost:8084/service', {
+    let central_registry = `http://${process.env.REGISTRY_NAME ? process.env.REGISTRY_NAME : "localhost" }:8084/service`;
+
+    fetch(central_registry, {
             method: 'post',
             body:    JSON.stringify(body),
             headers: { 'Content-Type': 'application/json' },
