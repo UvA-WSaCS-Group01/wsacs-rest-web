@@ -12,7 +12,7 @@ Prior running:
   * `server/user-service`
   * `server/registry`
 
-## Run the Registry
+## Run the Registry Service
 1. Run `npm run registry` to start the registry (do this before other sercices start).
 2. Registry listens on `localhost:8084`
 
