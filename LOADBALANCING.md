@@ -8,7 +8,7 @@ To run this demo you need:
 - `docker-compose`
 - `Postman`
 
-### Setup
+## Setup
 
 - Build container images with `docker-compose build`
 - Import collection `WSACS Assignment.postman_collection.json` into Postman.
