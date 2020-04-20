@@ -8,9 +8,9 @@ Server is built in the following environment:
 
 Prior running:
 - Run `npm install` in the following directories:
-  *`server/url-shorten-service`
-  *`server/user-service`
-  *`server/registry`
+  * `server/url-shorten-service`
+  * `server/user-service`
+  * `server/registry`
 
 ## Run the Registry
 1. Run `npm run registry` to start the registry (do this before other sercices start).
