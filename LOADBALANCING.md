@@ -3,8 +3,8 @@
 This demo demonstrates an exemplanatory implementation of how loadbalacing can be implemented using nginx.
 To run this demo you need:
 
-- `docker`
-- `docker-compose`
+- `docker (sudo apt install docker.io)`
+- `docker-compose (sudo apt  install docker-compose)`
 - `Postman`
 
 ## Setup
