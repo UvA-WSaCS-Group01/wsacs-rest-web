@@ -1,19 +1,105 @@
 {
 	"info": {
-		"_postman_id": "36a84771-5a38-4cd8-96b7-063168028347",
+		"_postman_id": "50a2d0fe-742f-4224-ab9b-10ad03d3bfc7",
 		"name": "WSACS Assignment",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "01 Create User",
+			"name": "Setup",
+			"item": [
+				{
+					"name": "01 Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "my-jwt-secret",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"lucien\",\"password\":\"123password\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd41efbe-8717-471d-9a70-08f300351d56",
+								"exec": [
+									"var data = pm.response.text();",
+									"pm.collectionVariables.set(\"auth_token\", data.trim());",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\": \"lucien\",\"password\":\"123password\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "03 Shorten URL",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "my-jwt-secret",
+							"value": "{{auth_token}}",
 							"type": "string"
 						}
 					]
@@ -22,7 +108,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"username\": \"lucien\",\"password\":\"123password\"}",
+					"raw": "{\"url\":\"http://www.nu.nl\"}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -30,49 +116,18 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/users",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "02 Login User",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"username\": \"lucien\",\"password\":\"123password\"}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/users/login",
+					"raw": "http://localhost:8080",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
-					"path": [
-						"users",
-						"login"
-					]
+					"port": "8080"
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "03 CREATE",
+			"name": "04 Get All",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -109,7 +164,7 @@
 			"response": []
 		},
 		{
-			"name": "03 CREATE Copy",
+			"name": "04 Get One",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -144,6 +199,36 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e3357d24-ef65-498f-badf-6886c645ee5d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1b676dac-5ddd-4622-a351-e4598e575c7c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4178fa3a-84fc-4553-8d72-36e8764ba92b",
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
 		}
 	],
 	"protocolProfileBehavior": {}
