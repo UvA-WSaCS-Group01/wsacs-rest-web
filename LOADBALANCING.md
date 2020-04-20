@@ -1,18 +1,19 @@
 # Loadbalancing Demo
+## Environment (Windows 10)
 
 This demo demonstrates an exemplanatory implementation of how loadbalacing can be implemented using nginx.
 To run this demo you need:
 
-- `docker (sudo apt install docker.io)`
-- `docker-compose (sudo apt  install docker-compose)`
+- `docker`
+- `docker-compose`
 - `Postman`
 
-## Setup
+### Setup
 
 - Build container images with `docker-compose build`
 - Import collection `WSACS Assignment.postman_collection.json` into Postman.
 
-## Run Microservice Ensemble 
+## Run Microservice Ensemble
 
 To start the Microservices plus the nginx loadbalancer just use:
 
