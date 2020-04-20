@@ -38,3 +38,7 @@ Prior running:
 * Run `curl -L -X DELETE 'http://localhost:8082/<ID HERE>' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete a shortened URL
 * Run `curl -L -X GET 'http://localhost:8082/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to get the list of IDs.
 * Run `curl -L -X DELETE 'http://localhost:8082/' -H 'Authorization: Bearer <JWT TOKEN HERE>' -H 'Content-Type: application/json'` to delete all URLS
+
+## Test the Registry Service
+
+* Run `curl -L -X GET 'http://localhost:8084/health' -H 'Content-Type:application/json'` to get the locations of all services.
