@@ -45,4 +45,5 @@ Prior running:
 
 ## Loadbalancing Demo:
 
-- The demo for loadbalacing can be found [here](./LOADBALANCING.md)
+- The demo for loadbalancing on windows 10 can be found [here](./LOADBALANCING.md) 
+- The demo for loadbalancing on Ubuntu 18.04 can be found [here](./LOADBALANCING_UBUNTU.md)  
