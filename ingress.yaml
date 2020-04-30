@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /user-service
+        pathType: Exact
+        backend:
+          serviceName: user-service
+          servicePort: 8082
+      - path: /url-service
+        pathType: Exact
+        backend:
+          serviceName: url-service
+          servicePort: 8083
