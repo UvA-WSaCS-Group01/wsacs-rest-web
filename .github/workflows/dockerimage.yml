@@ -22,6 +22,8 @@ jobs:
       - name: Push Container
         run: |
           docker-compose push
+          export TAG=$(git rev-parse --short "$GITHUB_SHA")
+          docker-compose push
       - name: Log out
         run: |
           docker logout
