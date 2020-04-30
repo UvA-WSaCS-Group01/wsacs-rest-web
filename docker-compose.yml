@@ -7,8 +7,8 @@ services:
   userservice:
     build:
       context: server/user-service/
-    image: l8518/wsacs-userservice
+    image: l8518/wsacs-userservice:${TAG-latest}
   url-shortener:
     build:
       context: server/url-shorten-service/
-    image: l8518/wsacs-url-shortener
+    image: l8518/wsacs-url-shortener:${TAG-latest}
