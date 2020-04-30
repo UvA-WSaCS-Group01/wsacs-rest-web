@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Build Container
         run: |
+          docker-compose build
           export TAG=$(git rev-parse --short "$GITHUB_SHA")
-          echo $TAG
           docker-compose build
       - name: Log into registry
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
