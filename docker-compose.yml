@@ -1,38 +1,14 @@
 version: '2.2'
 services:
-  loadbalancer:
-    build:
-      context: reverseproxy/
-    volumes:
-      - ./reverseproxy/conf.d/:/etc/nginx/conf.d/
-    ports:
-      - "8080:80"
-    depends_on:
-      - url-shortener.tld
   registry:
     build:
       context: server/registry/ 
+    image: l8518/wsacs-registry:${TAG-latest}
   userservice:
     build:
       context: server/user-service/
-    image: wsacs/userservice:latest
-    environment:
-      - REGISTRY_NAME=registry
-    depends_on:
-      - registry
-  url-shortener.tld:
+    image: l8518/wsacs-userservice:${TAG-latest}
+  url-shortener:
     build:
       context: server/url-shorten-service/
-    image: wsacs/url-shortener:latest
-    environment:
-      - REGISTRY_NAME=registry
-    depends_on:
-      - registry
-  01.url-shortener.tld:
-    image: wsacs/url-shortener:latest
-    environment:
-      - REGISTRY_NAME=registry
-    depends_on:
-      - registry
-  client:
-    image: curlimages/curl
+    image: l8518/wsacs-url-shortener:${TAG-latest}
