@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ feature/container ]
+
+jobs:
+
+  build-and-publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build Container
+        run: |
+          docker-compose build
+      - name: Push Container
+        run: |
+          docker-compose push
