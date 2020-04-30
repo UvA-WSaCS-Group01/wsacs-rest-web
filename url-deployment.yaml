@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: url-service
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: user-service
+      app: url-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: url-service
     spec:
       containers:
-      - name: userservice
-        image: l8518/wsacs-userservice:${TAG-latest}
+      - name: url-service
+        image: l8518/wsacs-url-shortener:latest
         ports:
-        - containerPort: 8083                                                                                                                                  20,0-1        All
+        - containerPort: 8083
