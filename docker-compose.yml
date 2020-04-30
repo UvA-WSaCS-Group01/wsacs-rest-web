@@ -3,7 +3,7 @@ services:
   registry:
     build:
       context: server/registry/ 
-    image: l8518/wsacs-registry:${IMG_TAG}
+    image: l8518/wsacs-registry:${TAG}
   userservice:
     build:
       context: server/user-service/
