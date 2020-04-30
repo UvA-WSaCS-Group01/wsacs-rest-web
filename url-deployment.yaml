@@ -16,4 +16,4 @@ spec:
       - name: userservice
         image: l8518/wsacs-userservice:${TAG-latest}
         ports:
-        - containerPort: 8082
+        - containerPort: 8083                                                                                                                                  20,0-1        All
