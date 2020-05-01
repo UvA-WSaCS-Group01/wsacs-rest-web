@@ -7,5 +7,5 @@ spec:
     app: url-service
   ports:
     - protocol: TCP
-      port: 8083
-      targetPort: 8083
+      port: 8082
+      targetPort: 8082

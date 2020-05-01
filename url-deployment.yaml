@@ -19,7 +19,7 @@ items:
         - name: url-service
           image: l8518/wsacs-url-shortener:latest
           ports:
-          - containerPort: 8083
+          - containerPort: 8082
 - apiVersion: v1
   kind: Service
   metadata:
@@ -27,8 +27,8 @@ items:
   spec:
     ports:
     - protocol: TCP
-      port: 8083
-      targetPort: 8083
+      port: 8082
+      targetPort: 8082
     selector:
       app: url-service
     type: NodePort

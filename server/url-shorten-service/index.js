@@ -40,14 +40,14 @@ app.use(function(req, res, next) {
     const body = {"service": "Url Shortener Service","location": "http://"+host +":"+port};
     let central_registry = `http://${process.env.REGISTRY_NAME ? process.env.REGISTRY_NAME : "localhost" }:8084/service`;
 
-    fetch(central_registry, {
-            method: 'post',
-            body:    JSON.stringify(body),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(res => res.json())
-        .then(json => console.log("Registered as: " +json))
-        .catch(err => console.log(err));
+    // fetch(central_registry, {
+    //         method: 'post',
+    //         body:    JSON.stringify(body),
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    //     .then(res => res.json())
+    //     .then(json => console.log("Registered as: " +json))
+    //     .catch(err => console.log(err));
 
     console.log("Url Shortener Service listening at http://%s:%s", host, port)
  })

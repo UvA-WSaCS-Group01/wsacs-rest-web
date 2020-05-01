@@ -12,9 +12,9 @@ spec:
         pathType: Exact
         backend:
           serviceName: user-service
-          servicePort: 8082
+          servicePort: 8083
       - path: /url-service
         pathType: Exact
         backend:
           serviceName: url-service
-          servicePort: 8083
+          servicePort: 8082
