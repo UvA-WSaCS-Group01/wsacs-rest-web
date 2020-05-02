@@ -5,6 +5,7 @@ on:
     branches: 
       - master
       - feature/k8s
+      - feature/k8s-improvements
 
 jobs:
 

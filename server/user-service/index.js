@@ -3,7 +3,9 @@ const app = express();
 const bodyParser = require('body-parser');
 const constants = require('./config/constants');
 const fetch = require('node-fetch');
+const morgan = require('morgan')
 
+app.use(morgan('combined'))
 app.use(bodyParser.json({
     strict:false
 }));
