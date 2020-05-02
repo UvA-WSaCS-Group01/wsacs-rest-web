@@ -1,0 +1,18 @@
+version: '2.2'
+services:
+  registry:
+    build:
+      context: server/registry/ 
+    image: l8518/wsacs-registry:${TAG-latest}
+  userservice:
+    build:
+      context: server/user-service/
+    image: l8518/wsacs-userservice:${TAG-latest}
+  url-shortener:
+    build:
+      context: server/url-shorten-service/
+    image: l8518/wsacs-url-shortener:${TAG-latest}
+  reverse-proxy:
+    build:
+      context: reverseproxy/
+    image: l8518/wsacs-reverseproxy:${TAG-latest}

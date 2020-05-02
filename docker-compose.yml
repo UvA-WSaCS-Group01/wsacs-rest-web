@@ -1,14 +1,32 @@
 version: '2.2'
 services:
-  registry:
-    build:
-      context: server/registry/ 
-    image: l8518/wsacs-registry:${TAG-latest}
-  userservice:
-    build:
-      context: server/user-service/
-    image: l8518/wsacs-userservice:${TAG-latest}
-  url-shortener:
-    build:
-      context: server/url-shorten-service/
-    image: l8518/wsacs-url-shortener:${TAG-latest}
+  loadbalancer:
+    image: l8518/wsacs-reverseproxy:latest
+    volumes:
+      - ./reverseproxy/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "8080:80"
+    networks:
+      - frontend
+    depends_on:
+      - default.url-shortener
+      - default.user-service
+  default.user-service:
+    image: l8518/wsacs-userservice:latest
+    networks:
+      - frontend
+      - backend
+  default.url-shortener:
+    image: l8518/wsacs-url-shortener:latest
+    networks:
+      - frontend
+      - backend
+  01.url-shortener:
+    image: l8518/wsacs-url-shortener:latest
+    networks:
+      - frontend
+      - backend
+networks:
+  frontend:
+    driver: bridge
+  backend:
