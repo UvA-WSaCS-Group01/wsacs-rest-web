@@ -26,6 +26,13 @@ items:
               port: 8082
             initialDelaySeconds: 5
             periodSeconds: 5
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "100m"
+            requests:
+              memory: "250Mi"
+              cpu: "100m"
 - apiVersion: v1
   kind: Service
   metadata:
