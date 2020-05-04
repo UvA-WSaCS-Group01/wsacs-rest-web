@@ -16,6 +16,16 @@ items:
           app: url-service
       spec:
         containers:
+        - name: registry
+          image: l8518/wsacs-registry:latest
+          ports: 
+            - containerPort: 8084
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8082
+            initialDelaySeconds: 5
+            periodSeconds: 5
         - name: url-service
           image: l8518/wsacs-url-shortener:latest
           ports:
